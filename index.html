@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="generateNumber" class="form-control" type="text">
+                    <button onclick="generate()" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control" type="text" id="usersInputArea">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div onclick="calculatorButton('seven')" id="seven" class="button">7</div>
+                              <div onclick="calculatorButton('eight')" id="eight" class="button">8</div>
+                              <div onclick="calculatorButton('nine')" id="nine" class="button">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div onclick="calculatorButton('four')" id="four" class="button">4</div>
+                              <div onclick="calculatorButton('five')" id="five" class="button">5</div>
+                              <div onclick="calculatorButton('six')" id="six" class="button">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div onclick="calculatorButton('one')" id="one" class="button">1</div>
+                              <div onclick="calculatorButton('two')" id="two" class="button">2</div>
+                              <div onclick="calculatorButton('three')" id="three" class="button">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div onclick="back()" class="button"><</div>
+                                <div onclick="calculatorButton('zero')" id="zero" class="button">0</div>
+                                <div id="clear" class="button">C</div>
+                            </div>
+                            <div>
+                                <button id="submit" type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p class="notify" id="unmatched" >❌ Pin Didn't Match, Please try again</p>
+            <p class="notify" id="matched">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+    <script>
+        // generate Button
+        function generate(){
+            var randomNumber = Math.floor((Math.random()*9000)+1000);
+           
+            document.getElementById("generateNumber").value = randomNumber;
+            }
+        //calculator body
+        function calculatorButton(id){
+            var valueOfButton = document.getElementById(id).innerText;
+            var usersInputValue = document.getElementById("usersInputArea").value;
+            var finalUsersInputValue =  usersInputValue + valueOfButton;
+            document.getElementById("usersInputArea").value = finalUsersInputValue;
+            
+        }
+        // pin matched and unmatched area
+        document.getElementById("submit").addEventListener("click",function(){
+            var generateInputArea = document.getElementById("generateNumber").value;
+            var usersInputfield = document.getElementById("usersInputArea").value;
+            if(generateInputArea == usersInputfield){
+                document.getElementById("unmatched").style.display = "none";
+                document.getElementById("matched").style.display = "block";
+            }
+            else{
+                document.getElementById("matched").style.display = "none";
+                document.getElementById("unmatched").style.display = "block";
+            }
+        });
+        // clear full input area
+        document.getElementById("clear").addEventListener("click",function(){
+            document.getElementById("usersInputArea").value = null;
+        });
+        // back space
+       function back(){
+           let back = document.getElementById("usersInputArea").value;
+           document.getElementById("usersInputArea").value = back.substring(0,back.length-1);
+       }
+       
+    </script>
+</body>
+</html>
